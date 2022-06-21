@@ -1,0 +1,65 @@
+<BR>
+<div style="margin:10px;">
+  <div style="height:35px;">
+    <div *ngIf="!currentFile || progress==100">
+      <span *ngIf="username==null">Please login to upload or edit files.</span>
+      &nbsp;<button *ngIf="username!=null" class="btn btn-primary btn-sm rounded-0" (click)="file.click();"
+        style="width:150px;"><i class="fa fa-cloud-upload"></i>&nbsp;Upload new file</button>
+      <input type="file" (change)="selectFile($event)" #file [(ngModel)]="filevalue" hidden />
+    </div>
+    <div *ngIf="currentFile && progress!=100" class="progress my-3" style="display:inline-block; width:150px;">
+      <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+        attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
+        {{ progress }}%
+      </div>
+    </div>
+  </div>
+  <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+  <BR>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortActive="FileName"
+    matSortDirection="asc">
+
+    <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+      <th width="250px" mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ col.label }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+          <div class="btn-edit" *ngSwitchCase="'isEdit'">
+            &nbsp;<button *ngIf="username!=null" title="Edit file properties" class="btn btn-primary btn-sm rounded-0 "
+              (click)="element.isEdit = !element.isEdit;"><i class="fa fa-edit"></i></button>&nbsp;
+            <button *ngIf="username!=null" title="Delete file" class="btn btn-danger btn-sm rounded-0"
+              (click)="deleteFile(element.id)"><i class="fa fa-trash"></i></button>
+          </div>
+          <span *ngSwitchDefault><span *ngIf="col.key != 'FileName'; else link">
+              {{ element[col.key] }}
+            </span>
+            <ng-template #link>
+              <a href=# (click)="downloadFile(element.id)">{{ element[col.key] }}</a>
+            </ng-template>
+          </span>
+        </div>
+        <div *ngIf="element.isEdit">
+          <div class="btn-edit" *ngIf="col.key == 'isEdit'; else dataField">
+            &nbsp;<button class="btn btn-primary btn-sm rounded-0"
+              (click)="element.isEdit = !element.isEdit;updateFile(element.id,element.FileName,element.FileTags);"><i
+                class="fa fa-check"></i></button>&nbsp;
+            <button class="btn btn-primary btn-sm rounded-0"
+              (click)="element.isEdit = !element.isEdit;element.FileTags=oldTags(element.id);element.FileName=oldName(element.id);"><i
+                class="fa fa-close"></i></button>
+          </div>
+          <ng-template #dataField>
+            <mat-form-field>
+              <input *ngIf="col.key != 'FileOwner'" [type]="col.type" matInput [(ngModel)]="element[col.key]" />
+              <span *ngIf="col.key == 'FileOwner'">{{element[col.key]}}</span>
+            </mat-form-field>
+          </ng-template>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

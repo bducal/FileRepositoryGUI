@@ -1,0 +1,24 @@
+
+{   
+    "Title": "File repository v1 (local)",
+    "useAuthentication": "False",
+    "API_URL":"http://localhost:5155/api",
+    
+    "comment clientId":"Application (client) ID from the app registration (required for authentication only)",
+    "clientId": "5a6e7269-e42d-4f7f-a45d-27f159743d75",
+    
+    "comment authority":"The Azure cloud instance and the app's sign-in audience (tenant ID, common, organizations, or consumers - required for authentication only)",
+    "authority": "https://login.microsoftonline.com/common",
+    
+    "comment redirectUri":"This is your redirect URI (required for authentication only)",
+    "redirectUri": "http://localhost/blank.html",
+    
+    "comment api_scope":"API scope with /.default at the end (required for authentication only)",
+    "api_scope":"api://2af9cc8e-2dee-4669-9c71-aa98214bee78/.default",
+
+    "comment endpoint_url":"This is your API URL from Azure app registration (required for authentication only)",
+    "endpoint_url": "http://localhost:5155/api/FileList",
+
+    "comment endpoint_scope":"This is your endpoint app scope (required for authentication only)",
+    "endpoint_scope": "api://2af9cc8e-2dee-4669-9c71-aa98214bee78/access_as_user"
+}

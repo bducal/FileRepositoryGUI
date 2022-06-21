@@ -1,0 +1,108 @@
+FROM node:16.10-alpine as build-step
+WORKDIR /usr/local/app
+COPY ./ /usr/local/app/
+
+##local without authentication
+# RUN echo '{ ' > /usr/local/app/src/assets/config.json  
+# RUN echo '    "Title": "File repository v1 (docker-local)",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "useAuthentication": "False",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "API_URL":"http://localhost:5155/api",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "clientId": "a7d0d166-bac6-4a9f-920a-f3b812a0bb51", ' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "authority": "https://login.microsoftonline.com/common",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "redirectUri": "https://mongofilesapi.ducal.pl/blank.html",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "api_scope":"api://6c6ffc6c-a8e6-47fa-b7be-681323bd7cef/.default",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_url": "https://mongofilesapi.ducal.pl/api/FileList",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_scope": "api://6c6ffc6c-a8e6-47fa-b7be-681323bd7cef/access_as_user"' >> /usr/local/app/src/assets/config.json
+# RUN echo '}' >> /usr/local/app/src/assets/config.json
+
+##local with authentication
+# RUN echo '{ ' > /usr/local/app/src/assets/config.json  
+# RUN echo '    "Title": "File repository v1 (docker-local)",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "useAuthentication": "True",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "API_URL":"http://localhost:5155/api",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "clientId": "5d6e7269-e42d-4f7f-a45d-27f159743d75", ' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "authority": "https://login.microsoftonline.com/common",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "redirectUri": "http://localhost/blank.html",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "api_scope":"api://20f9cc8e-2dee-4669-9c71-aa98214bee78/.default",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_url": "http://localhost:5155/api/FileList",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_scope": "api://20f9cc8e-2dee-4669-9c71-aa98214bee78/access_as_user"' >> /usr/local/app/src/assets/config.json
+# RUN echo '}' >> /usr/local/app/src/assets/config.json
+
+#local with traefic
+# RUN echo '{ ' > /usr/local/app/src/assets/config.json  
+# RUN echo '    "Title": "File repository v1 (docker-local)",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "useAuthentication": "True",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "API_URL":"https://ducal.ddns.net/api",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "clientId": "5d6e7269-e42d-4f7f-a45d-27f159743d75", ' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "authority": "https://login.microsoftonline.com/common",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "redirectUri": "https://ducal.ddns.net/blank.html",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "api_scope":"api://20f9cc8e-2dee-4669-9c71-aa98214bee78/.default",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_url": "https://ducal.ddns.net/api/FileList",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_scope": "api://20f9cc8e-2dee-4669-9c71-aa98214bee78/access_as_user"' >> /usr/local/app/src/assets/config.json
+# RUN echo '}' >> /usr/local/app/src/assets/config.json
+
+RUN echo '{ ' > /usr/local/app/src/assets/config.json  
+RUN echo '    "Title": "File repository v1 (Kubernetes)",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "useAuthentication": "True",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "API_URL":"https://files.ducal.pl/api",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "clientId": "5d6e7269-e42d-4f7f-a45d-27f159743d75", ' >> /usr/local/app/src/assets/config.json
+RUN echo '    "authority": "https://login.microsoftonline.com/common",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "redirectUri": "https://files.ducal.pl/blank.html",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "api_scope":"api://20f9cc8e-2dee-4669-9c71-aa98214bee78/.default",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "endpoint_url": "https://files.ducal.pl/api/FileList",' >> /usr/local/app/src/assets/config.json
+RUN echo '    "endpoint_scope": "api://20f9cc8e-2dee-4669-9c71-aa98214bee78/access_as_user"' >> /usr/local/app/src/assets/config.json
+RUN echo '}' >> /usr/local/app/src/assets/config.json
+
+#remote with authentication app2
+# RUN echo '{ ' > /usr/local/app/src/assets/config.json  
+# RUN echo '    "Title": "File repository v1 (Kubernetes)",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "useAuthentication": "True",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "API_URL":"https://mongofilesapi.ducal.pl/api",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "clientId": "5d6e7269-e42d-4f7f-a45d-27f159743d75", ' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "authority": "https://login.microsoftonline.com/common",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "redirectUri": "https://mongofilesapi.ducal.pl/blank.html",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "api_scope":"api://20f9cc8e-2dee-4669-9c71-aa98214bee78/.default",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_url": "https://mongofilesapi.ducal.pl/api/FileList",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_scope": "api://20f9cc8e-2dee-4669-9c71-aa98214bee78/access_as_user"' >> /usr/local/app/src/assets/config.json
+# RUN echo '}' >> /usr/local/app/src/assets/config.json
+
+
+#remote with authentication
+# RUN echo '{ ' > /usr/local/app/src/assets/config.json  
+# RUN echo '    "Title": "File repository v1 (Kubernetes)",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "useAuthentication": "True",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "API_URL":"https://mongofilesapi.ducal.pl/api",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "clientId": "a7d0d166-bac6-4a9f-920a-f3b812a0bb51", ' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "authority": "https://login.microsoftonline.com/common",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "redirectUri": "https://mongofilesapi.ducal.pl/blank.html",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "api_scope":"api://6c6ffc6c-a8e6-47fa-b7be-681323bd7cef/.default",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_url": "https://mongofilesapi.ducal.pl/api/FileList",' >> /usr/local/app/src/assets/config.json
+# RUN echo '    "endpoint_scope": "api://6c6ffc6c-a8e6-47fa-b7be-681323bd7cef/access_as_user"' >> /usr/local/app/src/assets/config.json
+# RUN echo '}' >> /usr/local/app/src/assets/config.json
+
+RUN npm install
+RUN npm run build --prod
+
+
+FROM nginx:1.17.1-alpine
+
+COPY --from=build-step /usr/local/app/src/nginx.conf /etc/nginx/
+COPY --from=build-step /usr/local/app/dist/files /usr/share/nginx/html
+EXPOSE 80
+
+# FROM node:16.10-alpine as build-step
+# WORKDIR /usr/local/app
+# COPY ./ /usr/local/app/
+# ##local without authentication
+# #RUN echo '{"Title": "File repository v1 (docker-local)","useAuthentication": "False","API_URL":"http://localhost:5155/api"}' > /usr/local/app/src/assets/config.json
+# #remote with authentication
+# RUN echo '{"Title": "File repository v1 (dockerx)","useAuthentication": "True","API_URL":"https://mongofilesapi.ducal.pl/api"}' > /usr/local/app/src/assets/config.json
+# RUN npm install
+# RUN npm run build --prod
+
+
+# FROM nginx:1.17.1-alpine
+
+# COPY --from=build-step /usr/local/app/src/nginx.conf /etc/nginx/
+# COPY --from=build-step /usr/local/app/dist/files /usr/share/nginx/html
+# EXPOSE 80

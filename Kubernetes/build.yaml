@@ -1,0 +1,79 @@
+#kubectl apply -f build.yaml --namespace ingress-basic
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filerepositorygui
+  namespace: ingress-basic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filerepositorygui
+  template:
+    metadata:
+      labels:
+        app: filerepositorygui
+    spec:
+      containers:
+      #CHANGE IMAGE PATH TO RESPECT YOUR ACR
+        - image: acrducal.azurecr.io/filerepositorygui
+          ports:
+          - containerPort: 80
+          name: filerepositorygui
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filerepositorygui-service
+  namespace: ingress-basic
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: filerepositorygui
+
+---
+#ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: filerepository-ingress
+  namespace: ingress-basic
+  annotations:
+
+    nginx.ingress.kubernetes.io/use-regex: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    #CHANGE THIS TO REFLECT YOUR DNS NAME
+    - mongofilesapi.ducal.pl
+    secretName: tls-secret
+  rules:
+  #CHANGE THIS TO REFLECT YOUR DNS NAME
+  - host: mongofilesapi.ducal.pl
+    http:
+      paths:
+      - path: /api/
+        pathType: Prefix
+        backend:
+          service:
+            name: filerepositoryapi-service
+            port:
+              number: 88  #must match service targetPort
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: filerepositorygui-service
+            port:
+              number: 80
+
+
+
+
+
+
